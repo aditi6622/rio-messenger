@@ -4,11 +4,13 @@ import com.rio.messenger.exceptions.IncorrectPasswordException;
 import com.rio.messenger.exceptions.UserAlreadyExistsException;
 import com.rio.messenger.exceptions.UserDoesNotExistsException;
 import com.rio.messenger.service.UserService;
+import java.util.List;
 import javax.validation.constraints.NotBlank;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -48,7 +50,12 @@ public class UserController {
           HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
-    return new ResponseEntity<>( HttpStatus.ACCEPTED);
+    return new ResponseEntity<>(HttpStatus.ACCEPTED);
+  }
 
+  @GetMapping("user")
+  public ResponseEntity fetchAllUsers() {
+    List<String> userList = userService.fetchUsers();
+    return new ResponseEntity<>(userList, HttpStatus.ACCEPTED);
   }
 }

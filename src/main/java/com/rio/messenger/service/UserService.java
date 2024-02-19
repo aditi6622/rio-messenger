@@ -6,6 +6,8 @@ import com.rio.messenger.exceptions.IncorrectPasswordException;
 import com.rio.messenger.exceptions.UserAlreadyExistsException;
 import com.rio.messenger.exceptions.UserDoesNotExistsException;
 import com.rio.messenger.repository.UserRepository;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 import lombok.RequiredArgsConstructor;
 
@@ -32,5 +34,14 @@ public class UserService {
     if (!passcode.equals(user.getPassword())) {
       throw new IncorrectPasswordException("Password is incorrect.");
     }
+  }
+
+  public List<String> fetchUsers() {
+    List<User> users = userRepository.fetchAllUsers();
+    List<String> usersList = new ArrayList<>();
+    for (User user : users) {
+      usersList.add(user.getUserName());
+    }
+    return usersList;
   }
 }
